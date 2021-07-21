@@ -2,21 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css'; 
+import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css';
 import './assets/styles.css';
-import AppHeader from './components/app-header.js';
+import AppBaseStructure from './components/app-base-structure.js';
 
 const App = (
     <>
         <div id="bg-layers">
-            <div class="bg-layer1"></div>
-            <div class="bg-layer2"></div>
-            <div class="bg-layer3"></div>
+            <div className="bg-layer1"></div>
+            <div className="bg-layer2"></div>
+            <div className="bg-layer3"></div>
         </div>
         <div>
-            <nav>
-                <AppHeader />
-            </nav>
-            <section></section>
+            <AppBaseStructure />
         </div>
     </>
 ); 
