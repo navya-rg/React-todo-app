@@ -1,0 +1,32 @@
+#bg-layers {
+  position: fixed;
+  z-index: -1000;
+}
+.bg-layer1, .bg-layer2, .bg-layer3 {
+  position: absolute;
+  top: calc(50vh - (90vw/2));
+  display: block;
+  width: 100vw;
+  height: 90vw;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+}
+.bg-layer1 {
+  background-color: #00adff1c;
+  animation:spin 20s linear infinite;
+}
+.bg-layer2 {
+  background-color: #00ff891c;
+  animation:spin 15s linear infinite;
+}
+.bg-layer3 {
+  background-color: #0095ff1c;
+  animation:spin 18s linear infinite;
+}
+
+@keyframes spin { 
+  100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } 
+}
+
+.navbar.bg-light {
+  background-color: #f8f9fab8!important;
+}
