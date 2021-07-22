@@ -9,7 +9,7 @@ class AppHeader extends React.Component {
           <i className="zmdi zmdi-menu"></i>
         </button>
         <Container className="text-center d-block">
-          <Navbar.Brand href="/" className="m-0">TODO</Navbar.Brand>
+          <Navbar.Brand href="/" className="m-0">{ this.props.listTitle }</Navbar.Brand>
         </Container>
       </Navbar>
     );

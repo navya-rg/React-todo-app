@@ -12,6 +12,8 @@ const App = (
             <div className="bg-layer1"></div>
             <div className="bg-layer2"></div>
             <div className="bg-layer3"></div>
+            <div className="bg-layer4"></div>
+            <div className="bg-layer5"></div>
         </div>
         <div>
             <AppBaseStructure />

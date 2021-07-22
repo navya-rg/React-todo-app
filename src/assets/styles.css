@@ -2,24 +2,36 @@
   position: fixed;
   z-index: -1000;
 }
-.bg-layer1, .bg-layer2, .bg-layer3 {
+[class^="bg-layer"] {
   position: absolute;
   top: calc(50vh - (90vw/2));
-  display: block;
-  width: 100vw;
   height: 90vw;
+  display: block;
   border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
 }
 .bg-layer1 {
+  width: 70vw;
   background-color: #00adff1c;
   animation:spin 20s linear infinite;
 }
 .bg-layer2 {
+  width: 100vw;
   background-color: #00ff891c;
   animation:spin 15s linear infinite;
 }
 .bg-layer3 {
+  width: 85vw;
   background-color: #0095ff1c;
+  animation:spin 18s linear infinite;
+}
+.bg-layer4 {
+  width: 100vw;
+  background-color: #00adff1c;
+  animation:spin 20s linear infinite;
+}
+.bg-layer5 {
+  width: 100vw;
+  background-color: #00ff891c;
   animation:spin 18s linear infinite;
 }
 
@@ -51,6 +63,7 @@
 #sidebar {
   height: calc(100vh - 45.6px);
   overflow: auto;
+  z-index: 1000;
 }
 
 @media (min-width: 0px) { 
@@ -61,8 +74,10 @@
   }
   #sidebar .sidebar-list-item {
     padding: 10px;
-    margin-bottom: 5px;
-    background: #ebefef;
+    margin-bottom: 10px;
+    background: linear-gradient(45deg, #65f6e261, #d2ff4782);
+    background-size: 200% 200%;
+    box-shadow: 0 0 10px #dedede;
     border-radius: 6px;
   }
 }
@@ -74,13 +89,16 @@
     animation: none;
   }
   #sidebar .sidebar-list-item {
-    background-color: #e8ffff;
+    background: #ffffff85;
+    box-shadow: none;
+    transition: 0.5s;
   }
 }
 
 .sidebar-list-item:hover {
-  background-color: #e6f0f3!important;
   cursor: pointer;
+  color: #808080;
+  box-shadow: 0 0 10px #80808047!important;
 }
 
 .sidebar-list-item .zmdi-star:hover, .sidebar-list-item .zmdi-star-outline:hover {
@@ -178,4 +196,38 @@
   font-size: calc(1rem + 0.5vw);
   font-weight: 300;
   line-height: 1.2;
+}
+
+.task {
+  background-color: #ffffff85;
+  border: none;
+  box-shadow: 2px 2px 2px 1px #5d5e5f1c;
+}
+
+.new-task {
+  border: none;
+  box-shadow: 0 0 10px #00000047;
+  background-color: #00bcc5;
+}
+
+.invisible-textbox, .invisible-textbox:focus {
+  background: none;
+  border: none;
+  outline: none;
+  color: white;
+  width: calc(100% - 5vw);
+  z-index: 100;
+  padding: 0;
+}
+
+.invisible-textbox::placeholder {
+  color: white;
+}
+
+.task-icon {
+  width: 15px;
+}
+
+.task-icon:hover {
+  cursor: pointer;
 }
