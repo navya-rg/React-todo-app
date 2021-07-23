@@ -105,6 +105,39 @@
   cursor: pointer;
 }
 
+.sidebar-list-item-options {
+  position: absolute;
+  bottom: -33px;
+  right: 9px;
+  background: white;
+  padding: 5px 15px;
+  width: 100px;
+  border-radius: 2rem 0rem 2rem 2rem;
+  text-align: center;
+  box-shadow: 0 0 10px #dedede;
+}
+
+.sidebar-list-item-options .zmdi-edit:hover{
+  color: #00bcc5;
+}
+
+.sidebar-list-item-options .zmdi-delete:hover {
+  color: #ff1a1a;
+}
+
+.sidebar-list-item-options .zmdi-star-outline, .sidebar-list-item-options .zmdi-star:hover{
+  color: #808080;
+}
+.sidebar-list-item-options .zmdi-star, .sidebar-list-item-options .zmdi-star-outline:hover{
+  color: #ffc107;
+}
+
+.currentValue {
+  display: inline;
+  box-sizing: content-box;
+  padding: 5px 10px;
+}
+
 @-webkit-keyframes slide {
   100% { left: 0; }
 }
@@ -224,10 +257,21 @@
   color: white;
 }
 
+.sidebar-list-item .invisible-textbox::placeholder {
+  color: gray;
+}
+
 .task-icon {
   width: 15px;
 }
 
 .task-icon:hover {
   cursor: pointer;
+}
+
+.no-items {
+  font-weight: bold;
+  color: #8080803b;
+  padding: 9px;
+  text-align: center;
 }

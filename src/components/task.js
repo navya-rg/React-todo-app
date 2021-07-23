@@ -14,14 +14,6 @@ class Task extends React.Component {
         this.taskUpdateHandler = this.taskUpdateHandler.bind(this);
     }
 
-    componentWillMount() {
-        document.addEventListener('mousedown', this.handleClick, false);
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener('mousedown', this.handleClick, false);
-    }
-
     toggleCompletion(id) {
         tasks.map(task => {
             if(task.id===id) {
@@ -60,7 +52,7 @@ class Task extends React.Component {
         else {
             complete = <i className="zmdi zmdi-circle-o task-icon" onClick={() => this.toggleCompletion(this.props.task.id)}></i>
         }
-        let message = <span onClick={this.toggleInputBox}>{this.props.task.message}</span>;
+        let message = <span onClick={this.toggleInputBox} style={textStyle}>{this.props.task.message}</span>;
         if(this.state.showInputBox) {
             message = <input type="text" className="invisible-textbox" onBlur={ this.toggleInputBox } defaultValue={this.props.task.message} onKeyPress={(ev) => this.taskUpdateHandler(ev, this.props.task.id, this.props.task.listId)} style={{color: "black"}} autoFocus />
         }
@@ -68,7 +60,7 @@ class Task extends React.Component {
             <div className="row mt-3" key={this.props.task.id}>
                 <div className="card task">
                     <div className="card-body row" style={{flexWrap: "nowrap"}}>
-                        <div className="col-11 p-0" style={textStyle}>
+                        <div className="col-11 p-0">
                             { complete } &nbsp;
                             { message }
                         </div>

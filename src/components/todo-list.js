@@ -83,11 +83,19 @@ class TodoList extends React.Component {
     }
 
     render() {
-        var list = tasks.filter(task => task.listId === this.state.listId).map((task) => {
+        const tasksInList = tasks.filter(task => task.listId === this.state.listId);
+        var list = tasksInList.map((task) => {
             return (
                 <Task task={task} key={task.id} deleteTask={this.deleteTask} />
             );
         })
+        if(tasksInList.length<=0) {
+            list = (
+                <div className="mt-3 no-items display-7">
+                    No tasks found :(
+                </div>
+            );
+        }
         return (
             <>
                 <div className="container px-5" style={{height: "calc(100vh - (65px + 45.82px))", overflowY: "auto"}}>
