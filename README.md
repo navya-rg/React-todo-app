@@ -1,5 +1,5 @@
 # React-Todo-App
-Todo app created while learning reactJS
+Todo app created while learning reactJS. APIs can be be found here: https://github.com/navya-rg/React-todo-app-API
 
 ![Screenshot](https://user-images.githubusercontent.com/54831248/126745596-5c64b05b-1812-4e50-a799-d63fe614b59e.png)
 
