@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { tempTodoLists, tasks } from '../dummy-data.js';
+import axios from 'axios';
 import Task from './task.js';
 
 function setWidthOfNewTaskInput() {
@@ -19,18 +19,26 @@ class TodoList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: null,
             listId: null,
+            tasks: [],
             rerender: false,
             taskMessage: null,
         };
         this.deleteTask = this.deleteTask.bind(this);
+        this.toggleCompletion = this.toggleCompletion.bind(this);
+        this.updateTask = this.updateTask.bind(this);
     }
 
     loadTodoList() {
         const listId = parseInt(window.location.pathname.replaceAll("/", ""), 10);
-        const list = tempTodoLists.find(list => list.id === listId);
-        this.setState({list: list, listId: parseInt(window.location.pathname.replaceAll("/", ""), 10)});
+        axios.get(`http://localhost:8080/get-tasks/${listId}`)
+        .then(response => {
+            this.setState({tasks: response.data.res, listId: parseInt(window.location.pathname.replaceAll("/", ""), 10)});
+        }); 
+        axios.get(`http://localhost:8080/get-list/${listId}`)
+        .then(response => {
+            this.setState({list: response.data.res});
+        });       
         // const list = tempTodoLists.find(l => l.id === this.state.listId);
         // if(list) {
         //     this.props.setListTitle(list.name);
@@ -48,59 +56,61 @@ class TodoList extends React.Component {
         setWidthOfNewTaskInput();
     }
 
-    toggleCompletion(id) {
-        tasks.map(task => {
-            if(task.id===id) {
-                task.isComplete = !task.isComplete;
-            }
-            return task;
-        })
-        this.setState({rerender: !this.state.rerender});
+    toggleCompletion(id, isComplete) {
+        axios.put(`http://localhost:8080/complete-task`, {id: id, isComplete: isComplete})
+        .then(response => {
+            this.loadTodoList();
+        });
     }
 
     deleteTask(id) {
-        const index = tasks.findIndex(task => task.id === id);
-        tasks.splice(index, 1);
-        this.setState({rerender: !this.state.rerender});
+        axios.delete(`http://localhost:8080/delete-task/${id}`)
+        .then(response => {
+            this.loadTodoList();
+        });
     }
 
     newTaskHandler(event) {
         this.setState({taskMessage: event.target.value});
         if (event.key === 'Enter') {
             const taskMessage = event.target.value;
-            const newId = Math.max.apply(Math, tasks.filter(task => task.listId === this.state.listId).map(function(task) { return task.id; }))
-            tasks.push({
-                id: newId>0 ? (newId+1) : 1,
-                listId: this.state.listId,
-                message: taskMessage,
-                isComplete: false,
-                lastUpdatedDate: new Date(),
-                creationDate: new Date(),
+            axios.post('http://localhost:8080/new-task', {listId: this.state.listId, message: taskMessage})
+            .then(response => {
+                event.target.value = '';
+                this.setState({taskMessage: null});
+                this.loadTodoList();
             });
-            event.target.value = '';
-            this.setState({taskMessage: null});
         }
     }
 
+    updateTask(id, message) {
+        axios.put(`http://localhost:8080/update-task`, {id: id, message: message})
+        .then(response => {
+            this.loadTodoList();
+        });
+    }
+
     render() {
-        const tasksInList = tasks.filter(task => task.listId === this.state.listId);
-        var list = tasksInList.map((task) => {
-            return (
-                <Task task={task} key={task.id} deleteTask={this.deleteTask} />
-            );
-        })
-        if(tasksInList.length<=0) {
-            list = (
+        var tasks;
+        if(!this.state.tasks || this.state.tasks.length<=0) {
+            tasks = (
                 <div className="mt-3 no-items display-7">
                     No tasks found :(
                 </div>
             );
         }
+        else {
+            tasks = this.state.tasks.map((task) => {
+                return (
+                    <Task task={task} key={task.id} deleteTask={this.deleteTask} toggleCompletion={this.toggleCompletion} updateTask={this.updateTask} />
+                );
+            })
+        }
         return (
             <>
                 <div className="container px-5" style={{height: "calc(100vh - (65px + 45.82px))", overflowY: "auto"}}>
                     <div className="row mt-3"></div>
-                    {list}
+                    {tasks}
                     <div className="row" style={{height: "85px"}}></div>
                 </div>
                 <div className="container px-5">

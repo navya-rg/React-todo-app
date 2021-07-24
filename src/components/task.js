@@ -1,5 +1,4 @@
 import React from "react";
-import { tasks } from '../dummy-data.js';
 
 class Task extends React.Component {
     constructor(props) {
@@ -14,29 +13,14 @@ class Task extends React.Component {
         this.taskUpdateHandler = this.taskUpdateHandler.bind(this);
     }
 
-    toggleCompletion(id) {
-        tasks.map(task => {
-            if(task.id===id) {
-                task.isComplete = !task.isComplete;
-            }
-            return task;
-        })
-        this.setState({rerender: !this.state.rerender});
-    }
-
     toggleInputBox() {
         this.setState({showInputBox: !this.state.showInputBox});
     }
 
-    taskUpdateHandler(event, taskId, listId) {
+    taskUpdateHandler(event, taskId) {
         if (event.key === 'Enter') {
             const taskMessage = event.target.value;
-            tasks.map(function(task) { 
-                if(task.id === taskId && task.listId === listId) {
-                    task.message = taskMessage;
-                }
-                return task; 
-            });
+            this.props.updateTask(taskId, taskMessage);
             this.setState({showInputBox: false});
         }
     }
@@ -45,16 +29,16 @@ class Task extends React.Component {
         let complete = '';
         let textStyle = { display: "inline-block"};
         if(this.props.task.isComplete) {
-            complete = <i className="zmdi zmdi-check task-icon" onClick={() => this.toggleCompletion(this.props.task.id)}></i>
+            complete = <i className="zmdi zmdi-check task-icon" onClick={() => this.props.toggleCompletion(this.props.task.id, false)}></i>
             textStyle.textDecoration = "line-through";
             textStyle.color =  "#6c757d";
         }
         else {
-            complete = <i className="zmdi zmdi-circle-o task-icon" onClick={() => this.toggleCompletion(this.props.task.id)}></i>
+            complete = <i className="zmdi zmdi-circle-o task-icon" onClick={() => this.props.toggleCompletion(this.props.task.id, true)}></i>
         }
         let message = <span onClick={this.toggleInputBox} style={textStyle}>{this.props.task.message}</span>;
         if(this.state.showInputBox) {
-            message = <input type="text" className="invisible-textbox" onBlur={ this.toggleInputBox } defaultValue={this.props.task.message} onKeyPress={(ev) => this.taskUpdateHandler(ev, this.props.task.id, this.props.task.listId)} style={{color: "black"}} autoFocus />
+            message = <input type="text" className="invisible-textbox" onBlur={ this.toggleInputBox } defaultValue={this.props.task.message} onKeyPress={(ev) => this.taskUpdateHandler(ev, this.props.task.id)} style={{color: "black"}} autoFocus />
         }
         return (
             <div className="row mt-3" key={this.props.task.id}>

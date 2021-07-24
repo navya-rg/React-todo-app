@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { tempTodoLists } from '../dummy-data.js';
 
 class SideBarLink extends React.Component {
     constructor(props) {
@@ -30,20 +29,15 @@ class SideBarLink extends React.Component {
     listUpdateHandler(event, id) {
         if (event.key === 'Enter') {
             const listName = event.target.value;
-            tempTodoLists.map(function(list) { 
-                if(list.id === id) {
-                    list.name = listName;
-                }
-                return list; 
-            });
+            this.props.updateList(id, listName);
             this.setState({showInputBox: false});
         }
     }
 
     render() {
-        let star = <i className="zmdi zmdi-star-outline" onClick={() => this.props.toggleFavouriteList(this.props.list.id)}></i>
+        let star = <i className="zmdi zmdi-star-outline" onClick={() => this.props.toggleFavouriteList(this.props.list.id, true)}></i>
         if(this.props.list.isStarred) {
-            star = <i className="zmdi zmdi-star" onClick={() => this.props.toggleFavouriteList(this.props.list.id)}></i>
+            star = <i className="zmdi zmdi-star" onClick={() => this.props.toggleFavouriteList(this.props.list.id, false)}></i>
         }
         let options = '';
         if(this.state.showOptions) {
